@@ -45,3 +45,9 @@ class FileUtils:
         element_text = element.text
         return element_text
 
+    @staticmethod
+    def get_download_dir():
+        if os.name == 'nt':  # Windows
+            return os.path.expanduser('~\\Downloads')
+        else:  # Linux, macOS
+            return os.path.expanduser('~/Downloads')

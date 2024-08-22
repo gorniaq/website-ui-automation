@@ -15,7 +15,11 @@ class HomePageLocators:
     UA_LANG = (By.XPATH, "//ul[@class='location-selector__list']//a[@href='https://careers.epam.ua']")
 
     HTML = By.TAG_NAME, "html"
-    FOOTER = By.CSS_SELECTOR, "div.footer__copyright"
+    FOOTER = (By.XPATH, "//footer//div[@class='footer-inner']")
+    FOOTER_COPYRIGHT = By.CSS_SELECTOR, "div.footer__copyright"
+
+    POLICIES_SECTION = (By.CLASS_NAME, "policies")
+    POLICY_LINKS = (By.CSS_SELECTOR, "ul li a")
 
 
 

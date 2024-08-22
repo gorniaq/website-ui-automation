@@ -63,12 +63,12 @@ class TestChangeLanguage(BrowserUtils, FileUtils):
 
                 # Wait for the footer element to be present, then scroll to it.
                 WebDriverWait(driver, 20).until(
-                    EC.presence_of_element_located(HomePageLocators.FOOTER)
+                    EC.presence_of_element_located(HomePageLocators.FOOTER_COPYRIGHT)
                 )
-                self.scroll_to_element(driver, HomePageLocators.FOOTER)
+                self.scroll_to_element(driver, HomePageLocators.FOOTER_COPYRIGHT)
 
                 # Verify that the footer contains the correct Ukrainian text.
-                footer_text = self.get_element_text(driver, HomePageLocators.FOOTER)
+                footer_text = self.get_element_text(driver, HomePageLocators.FOOTER_COPYRIGHT)
                 assert_that(footer_text, contains_string("Усі права захищено"))
                 logging.info("Language change to Ukrainian verified successfully")
                 allure.attach(f"Footer text: {footer_text}", name="Footer Text Verification",
