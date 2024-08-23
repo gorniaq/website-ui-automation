@@ -14,12 +14,26 @@ class HomePageLocators:
     LANG_SELECTOR_BTN = (By.CSS_SELECTOR, "button.location-selector__button")
     UA_LANG = (By.XPATH, "//ul[@class='location-selector__list']//a[@href='https://careers.epam.ua']")
 
-    HTML = By.TAG_NAME, "html"
+    HTML = (By.TAG_NAME, "html")
     FOOTER = (By.XPATH, "//footer//div[@class='footer-inner']")
-    FOOTER_COPYRIGHT = By.CSS_SELECTOR, "div.footer__copyright"
+    FOOTER_COPYRIGHT = (By.CSS_SELECTOR, "div.footer__copyright")
+
+    TAB_LOCATION = (By.ID, "id-890298b8-f4a7-3f75-8a76-be36dc4490fd")
+    TAB_LOCATION_SECTION = (By.XPATH, "//*[@id='main']/div[1]/div[16]")
+    REGION_TABS = (By.CLASS_NAME, "tabs-23__link")
 
     POLICIES_SECTION = (By.CLASS_NAME, "policies")
     POLICY_LINKS = (By.CSS_SELECTOR, "ul li a")
+
+    SEARCH_ICON = (By.CLASS_NAME, "search-icon")
+    SEARCH_PANEL = (By.CSS_SELECTOR, "div.header-search__panel.opened[style*='display: block;']")
+
+    SEARCH_INPUT = (By.ID, "new_form_search")
+    SEARCH_BUTTON_FIND = (By.XPATH, "//button[contains(@class, 'custom-search-button')]")
+    SEARCH_RESULTS_COUNTER = (By.XPATH, "//h2[@class='search-results__counter']")
+    SEARCH_RESULTS_ITEMS = (By.CLASS_NAME, "search-results__items")
+    FIRST_SEARCH_RESULT = (By.CSS_SELECTOR, ".search-results__items .search-results__item")
+    TARGET_ELEMENT = (By.ID, "id-6563fe11-2f96-386e-92ae-b843b1712be5")
 
 
 
