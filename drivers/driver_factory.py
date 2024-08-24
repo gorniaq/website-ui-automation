@@ -11,12 +11,6 @@ class DriverFactory:
     def get_driver(browser_name="chrome"):
         """
         Create and return a WebDriver instance for the specified browser.
-        Args:
-            browser_name (str): The name of the browser to initialize. Defaults to "chrome".
-        Returns:
-            WebDriver: An instance of WebDriver for the specified browser.
-        Raises:
-            ValueError: If the specified browser is not supported.
         """
         if browser_name == "chrome":
             # Set up Chrome-specific options

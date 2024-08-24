@@ -29,7 +29,7 @@ class BrowserUtils:
             driver (WebDriver): The WebDriver instance.
             locator (tuple): The locator of the element to scroll to, e.g., (By.ID, 'element_id').
         """
-        element = WebDriverWait(driver, 10).until(
+        element = WebDriverWait(driver, 20).until(
             EC.visibility_of_element_located(locator)
         )
         driver.execute_script("arguments[0].scrollIntoView(true);", element)
