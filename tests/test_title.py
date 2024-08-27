@@ -3,7 +3,6 @@ import time
 import pytest
 import allure
 from hamcrest import assert_that, equal_to
-from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 from config.config import BASE_URL

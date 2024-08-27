@@ -1,6 +1,6 @@
+import pytest
 import logging
 import allure
-import pytest
 from hamcrest import assert_that, has_item, equal_to
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -11,6 +11,7 @@ from utils.browser_utils import BrowserUtils
 
 
 class TestPoliciesList(BrowserUtils):
+
     @allure.feature('Policies List')
     @allure.story('Verify policies list on the page')
     @pytest.mark.parametrize("driver", ["chrome", "firefox"], indirect=True)

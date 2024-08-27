@@ -1,7 +1,6 @@
 import pytest
 import allure
 import logging
-import time
 from hamcrest import assert_that, equal_to
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -39,7 +38,6 @@ class TestOurLocationsRegions(BrowserUtils):
                 # Scroll to the Locations section for visibility
                 self.scroll_to_element(driver, HomePageLocators.TAB_LOCATION_SECTION)
                 logging.info("Our Locations section found")
-                time.sleep(3)
 
             # Find all region tabs within the Locations section and log their texts.
             with allure.step("Find region tabs and log their texts"):

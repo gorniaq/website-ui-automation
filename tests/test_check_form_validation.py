@@ -1,20 +1,15 @@
-import time
-
 import pytest
 import allure
 import logging
-from hamcrest import assert_that, contains_string, is_, less_than_or_equal_to, not_none
+from hamcrest import assert_that, is_, less_than_or_equal_to, not_none
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import re
 
-
-from config.config import BASE_URL, CONTACT_URL, FORM_FIELD_VALUES
+from config.config import CONTACT_URL, FORM_FIELD_VALUES
 from locators.contacts_page_locators import ContactsPageLocators
-from locators.home_page_locators import HomePageLocators
 from utils.browser_utils import BrowserUtils
-from utils.file_utils import FileUtils
 
 
 class TestFormsFieldsValidation(BrowserUtils):

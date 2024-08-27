@@ -1,5 +1,5 @@
-import logging
 import pytest
+import logging
 import allure
 from hamcrest import assert_that, contains_string, equal_to
 from selenium.webdriver.support.wait import WebDriverWait

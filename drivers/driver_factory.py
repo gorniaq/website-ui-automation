@@ -17,7 +17,7 @@ class DriverFactory:
             chrome_options = ChromeOptions()
             chrome_options.add_argument("--incognito")  # Open Chrome in Incognito mode
             chrome_options.add_argument("--disable-cache")  # Disable caching to ensure fresh data
-            # chrome_options.add_argument("--headless")  # run Chrome in headless mode
+            chrome_options.add_argument("--headless")  # run Chrome in headless mode
             # Create a Chrome WebDriver instance with the specified options
             driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()), options=chrome_options)
         elif browser_name == "firefox":
