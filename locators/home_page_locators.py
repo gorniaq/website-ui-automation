@@ -20,7 +20,8 @@ class HomePageLocators:
 
     TAB_LOCATION = (By.ID, "id-890298b8-f4a7-3f75-8a76-be36dc4490fd")
     TAB_LOCATION_SECTION = (By.XPATH, "//*[@id='main']/div[1]/div[16]")
-    REGION_TABS = (By.CLASS_NAME, "tabs-23__link")
+    REGION_LIST = (By.XPATH, "//div[@class='js-tabs-controls']")
+    REGION_TABS = (By.XPATH, "//div[contains(@class, 'tabs-23__title') and contains(@class, 'js-tabs-title')]")
 
     POLICIES_SECTION = (By.CLASS_NAME, "policies")
     POLICY_LINKS = (By.CSS_SELECTOR, "ul li a")
