@@ -24,7 +24,6 @@ class TestMetaTitle(BrowserUtils):
         try:
             # Open the homepage
             with allure.step("Opening the homepage"):
-                logging.info(f"Opening URL: {BASE_URL}")
                 self.open_url(driver, BASE_URL)
 
             # Wait for the <meta> element with 'og:title' attribute to be present

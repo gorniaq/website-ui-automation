@@ -21,7 +21,6 @@ class TestThemeSwitch(BrowserUtils):
         try:
             # Open the homepage
             with allure.step("Opening the homepage"):
-                logging.info(f"Opening URL: {BASE_URL}")
                 self.open_url(driver, BASE_URL)
 
             # Handle and close the cookie notification banner

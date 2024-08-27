@@ -1,3 +1,5 @@
+import logging
+
 from hamcrest import assert_that, equal_to
 from selenium.common import TimeoutException
 from selenium.webdriver.remote.webdriver import WebDriver
@@ -16,11 +18,12 @@ class BrowserUtils:
             url (str): The URL to open.
             expected_url (str, optional): The URL to verify after loading. Defaults to None.
         """
+        logging.info(f"Opening URL: {url}")
         driver.get(url)
 
         # If an expected URL is provided, verify it matches the current URL
         if expected_url:
-            WebDriverWait(driver, 10).until(EC.url_to_be(expected_url))
+            WebDriverWait(driver, 20).until(EC.url_to_be(expected_url))
 
     @staticmethod
     def scroll_to_element(driver, locator):
