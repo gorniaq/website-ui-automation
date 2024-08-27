@@ -32,3 +32,22 @@ This project contains test automation scripts using Selenium WebDriver and Pytho
       pytest --alluredir=allure-results
       allure serve allure-results
       ```
+
+## Allure Test Report
+![Allure Report](https://i.imgur.com/nLfuSEt.png)
+
+## Test Case Summary
+
+This is a summary of the test cases that did not pass:
+
+   **Case 1. Check the Title is Correct**
+
+   Failed - The title does not match the expected value due to extra spaces at the end.
+
+![Case 1 Allure Report](https://i.imgur.com/Qas4cYu.png)
+
+   **Case 4. Check the Policies List**
+
+   Failed - The test expected 6 items, but 9 items are displayed on the site.
+   
+![Case 4 Allure Report](https://imgur.com/mqUH0si.png)
