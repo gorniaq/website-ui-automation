@@ -45,7 +45,7 @@ class BrowserUtils:
         logger.info("Scrolled to the top of the page")
 
     @staticmethod
-    def _wait_for_notification_to_disappear(driver, timeout=20):
+    def _wait_for_notification_to_disappear(driver, timeout=30):
         """
         Wait for the cookies notification to disappear from the page.
         Args:
@@ -71,7 +71,7 @@ class BrowserUtils:
         """
         try:
             # Wait until the notification close button is clickable
-            close_button = WebDriverWait(driver, 10).until(
+            close_button = WebDriverWait(driver, 20).until(
                 EC.element_to_be_clickable(HomePageLocators.COOKIE_ACCEPT_BUTTON)
             )
             BrowserUtils.scroll_to_element(driver, HomePageLocators.COOKIE_ACCEPT_BUTTON)
