@@ -1,53 +1,48 @@
 import os
 import time
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 import logging
 
 
 class FileUtils:
 
     @staticmethod
-    def get_element_attribute(driver, locator, attribute):
-        """
-        Retrieves the value of a specified attribute from an element located by the provided locator.
-        Args:
-            driver (webdriver): The WebDriver instance used to interact with the browser.
-            locator (tuple): A tuple containing the locator strategy and value to locate the element.
-            attribute (str): The name of the attribute whose value is to be retrieved.
-        Returns:
-            str: The value of the specified attribute from the located element.
-        """
-        # Wait until the element is visible on the page
-        element = WebDriverWait(driver, 10).until(
-            EC.visibility_of_element_located(locator)
-        )
-        # Retrieve the value of the specified attribute from the located element
-        attribute_value = element.get_attribute(attribute)
-        return attribute_value
-
-    @staticmethod
-    def get_element_text(driver, locator):
-        """
-        Retrieves the text content from an element located by the provided locator.
-        Args:
-            driver (webdriver): The WebDriver instance used to interact with the browser.
-            locator (tuple): A tuple containing the locator strategy and value to locate the element.
-        Returns:
-            str: The text content of the located element.
-        """
-        # Wait until the element is visible on the page
-        element = WebDriverWait(driver, 10).until(
-            EC.visibility_of_element_located(locator)
-        )
-        # Retrieve the text content from the located element
-        element_text = element.text
-        return element_text
-
-    @staticmethod
     def get_download_dir():
+        """
+        Returns the path to the Downloads directory based on the operating system.
+        Returns:
+            str: The path to the Downloads directory.
+        """
         if os.name == 'nt':  # Windows
             return os.path.expanduser('~\\Downloads')
         else:  # Linux, macOS
             return os.path.expanduser('~/Downloads')
+
+    @staticmethod
+    def verify_file_download(expected_file_name):
+        """
+        Verify that the expected file has been downloaded to the default download directory.
+        Args:
+            expected_file_name (str): The name of the file expected to be downloaded.
+        Raises:
+            AssertionError: If the expected file is not found within the timeout period.
+        """
+        file_found = False
+        # Record the start time of the verification
+        start_time = time.time()
+        # Get the path to the download directory
+        download_dir = FileUtils.get_download_dir()
+
+        # Wait up to 60 seconds for the file to appear in the download directory
+        while time.time() - start_time < 60:
+            # List all files in the download directory
+            files = os.listdir(download_dir)
+            for file in files:
+                # Check if there is a file with a .pdf extension and the expected file name
+                if file.endswith(".pdf") and expected_file_name in file:
+                    logging.info(f"Downloaded file found: {file}")
+                    file_found = True
+                    break
+            if file_found:
+                break
+
+        return file_found

@@ -15,8 +15,8 @@ class TestMetaTitle(BrowserUtils):
         """
         Test to verify the meta title on the homepage.
         """
-        # Open the homepage
-        with allure.step("Opening the homepage"):
+        # Open the homepage and close the cookie notification banner
+        with allure.step("Open URL and close the cookie banner"):
             self.open_url_and_handle_notification(driver, BASE_URL)
 
         # Wait for the <meta> element with 'og:title' attribute to be present
@@ -25,9 +25,9 @@ class TestMetaTitle(BrowserUtils):
 
         # Get the 'content' attribute from the <meta> element
         with allure.step("Getting the 'content' attribute from <meta> element"):
-            content = meta_title.get_attribute("content")
+            content = meta_title.get_attribute("content").strip()
 
         # Compare the meta title content with the expected value
         with allure.step("Comparing meta title content with expected value"):
-            expected_title = "EPAM | Software Engineering & Product Development Services  "
+            expected_title = "EPAM | Software Engineering & Product Development Services"
             assert_that(content, equal_to(expected_title))

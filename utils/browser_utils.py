@@ -1,6 +1,4 @@
 import logging
-
-from hamcrest import assert_that, equal_to
 from selenium.common import TimeoutException
 from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.support.ui import WebDriverWait
@@ -12,7 +10,7 @@ from locators.home_page_locators import HomePageLocators
 class BrowserUtils:
     @staticmethod
     def open_url_and_handle_notification(driver, url, expected_url=None):
-        """"Opens a URL in the browser, handles any notifications, and optionally verifies that the correct URL is loaded.
+        """Opens a URL in the browser, handles any notifications, and optionally verifies that the correct URL is loaded.
         Args:
             driver (WebDriver): The WebDriver instance.
             url (str): The URL to open.
@@ -41,6 +39,66 @@ class BrowserUtils:
         return WebDriverWait(driver, timeout).until(
             EC.presence_of_element_located(locator)
         )
+
+    @staticmethod
+    def wait_for_element_to_be_clickable(driver, locator, timeout=20):
+        """
+        Wait for an element to be clickable.
+        Args:
+            driver (WebDriver): The WebDriver instance.
+            locator (tuple): The locator of the element to wait for.
+            timeout (int): The maximum time to wait for the element to be clickable.
+        Returns:
+            WebElement: The element once it is clickable.
+        """
+        return WebDriverWait(driver, timeout).until(
+            EC.element_to_be_clickable(locator)
+        )
+
+    @staticmethod
+    def get_element_attribute(driver, locator, attribute):
+        """
+        Retrieves the value of a specified attribute from an element located by the provided locator.
+        Args:
+            driver (webdriver): The WebDriver instance used to interact with the browser.
+            locator (tuple): A tuple containing the locator strategy and value to locate the element.
+            attribute (str): The name of the attribute whose value is to be retrieved.
+        Returns:
+            str: The value of the specified attribute from the located element.
+        """
+        # Use wait_for_element to wait until the element is present in the DOM
+        element = BrowserUtils.wait_for_element(driver, locator, timeout=20)
+        # Retrieve and return the value of the specified attribute from the located element
+        return element.get_attribute(attribute)
+
+    @staticmethod
+    def get_element_text(driver, locator):
+        """
+        Retrieves the text content from an element located by the provided locator.
+        Args:
+            driver (webdriver): The WebDriver instance used to interact with the browser.
+            locator (tuple): A tuple containing the locator strategy and value to locate the element.
+        Returns:
+            str: The text content of the located element.
+        """
+        # Use wait_for_element to wait until the element is present in the DOM
+        element = BrowserUtils.wait_for_element(driver, locator, timeout=20)
+        # Retrieve and return the text content from the located element
+        return element.text
+
+    @staticmethod
+    def verify_url(driver, expected_url, timeout=20):
+        """
+        Verifies that the current URL matches the expected URL.
+        Args:
+            driver (WebDriver): The WebDriver instance.
+            expected_url (str): The URL that is expected to be loaded.
+            timeout (int, optional): Maximum time to wait for the URL to match. Defaults to 20 seconds.
+        """
+        WebDriverWait(driver, timeout).until(
+            EC.url_to_be(expected_url)
+        )
+        logging.info(f"URL verified: {expected_url}")
 
     @staticmethod
     def scroll_to_element(driver, locator):

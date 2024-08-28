@@ -8,7 +8,6 @@ from selenium.webdriver.support import expected_conditions as EC
 from config.config import BASE_URL
 from locators.home_page_locators import HomePageLocators
 from utils.browser_utils import BrowserUtils
-from utils.file_utils import FileUtils
 
 
 class TestSearchFunction(BrowserUtils):
@@ -22,76 +21,50 @@ class TestSearchFunction(BrowserUtils):
         Raises:
             Exception: If any error occurs during the test.
         """
-        try:
-            with allure.step("Closing the cookie banner"):
-                self.open_url(driver, BASE_URL)
-                self.handle_notification(driver)
+        # Open the homepage and close the cookie notification banner
+        with allure.step("Open URL and close the cookie banner"):
+            self.open_url_and_handle_notification(driver, BASE_URL)
 
-            # Click on the search icon to open the search panel
-            with allure.step("Clicking the search icon"):
-                search_icon = WebDriverWait(driver, 10).until(
-                    EC.element_to_be_clickable(HomePageLocators.SEARCH_ICON)
-                )
-                search_icon.click()
-                logging.info("Search icon clicked.")
+        # Click on the search icon to open the search panel
+        with allure.step("Clicking the search icon"):
+            search_icon = self.wait_for_element_to_be_clickable(driver, HomePageLocators.SEARCH_ICON, 20)
+            search_icon.click()
 
-            # Enter the search query 'AI'
-            with allure.step("Entering search query"):
-                WebDriverWait(driver, 10).until(
-                    EC.visibility_of_element_located(HomePageLocators.SEARCH_PANEL)
-                )
-                logging.info("Search panel opened and displayed.")
-                search_input = WebDriverWait(driver, 10).until(
-                    EC.presence_of_element_located(HomePageLocators.SEARCH_INPUT)
-                )
-                search_input.send_keys("AI")
-                logging.info("Search query 'AI' entered.")
+        # Enter the search query 'AI'
+        with allure.step("Entering search query"):
+            self.wait_for_element(driver, HomePageLocators.SEARCH_PANEL, 20)
+            search_input = self.wait_for_element(driver, HomePageLocators.SEARCH_INPUT, 20)
+            search_input.send_keys("AI")
 
-            # Click the search button to submit the search
-            with allure.step("Clicking the search button"):
-                search_button = WebDriverWait(driver, 30).until(
-                    EC.presence_of_element_located(HomePageLocators.SEARCH_BUTTON_FIND)
-                )
-                search_button.click()
-                logging.info("Search button clicked.")
+        # Click the search button to submit the search
+        with allure.step("Clicking the search button"):
+            search_button = self.wait_for_element(driver, HomePageLocators.SEARCH_BUTTON_FIND, 30)
+            search_button.click()
 
-            # Verify that the URL contains the search query parameter
-            with allure.step("Verifying URL contains search query"):
-                WebDriverWait(driver, 10).until(
-                    EC.url_contains("q=AI")
-                )
-                current_url = driver.current_url
-                assert_that(current_url, contains_string("q=AI"))
-                logging.info(f"Current URL is: {current_url}")
+        # Verify that the URL contains the search query parameter
+        with allure.step("Verifying URL contains search query"):
+            WebDriverWait(driver, 10).until(
+                EC.url_contains("q=AI")
+            )
+            current_url = driver.current_url
+            assert_that(current_url, contains_string("q=AI"))
 
-            # Check that search results are displayed correctly
-            with allure.step("Checking search results"):
-                search_results_counter = WebDriverWait(driver, 10).until(
-                    EC.presence_of_element_located(HomePageLocators.SEARCH_RESULTS_COUNTER)
-                )
-                # Verify that the search results counter is displayed
-                assert_that(search_results_counter.is_displayed(), "Search results counter is not displayed.")
+        # Check that search results are displayed correctly
+        with allure.step("Checking search results"):
+            search_results_counter = self.wait_for_element(driver, HomePageLocators.SEARCH_RESULTS_COUNTER, 20)
+            # Verify that the search results counter is displayed
+            assert_that(search_results_counter.is_displayed(), "Search results counter is not displayed.")
 
-                search_results_items = WebDriverWait(driver, 10).until(
-                    EC.presence_of_element_located(HomePageLocators.SEARCH_RESULTS_ITEMS)
-                )
-                # Scroll to the search results section for better visibility
-                self.scroll_to_element(driver, HomePageLocators.SEARCH_RESULTS_ITEMS)
-                assert_that(search_results_items.is_displayed(), "Search results items are not displayed.")
+            search_results_items = self.wait_for_element(driver, HomePageLocators.SEARCH_RESULTS_ITEMS, 20)
 
-                # Extract the text from the search results counter and verify it contains 'AI'
-                counter_text = FileUtils.get_element_text(driver, HomePageLocators.SEARCH_RESULTS_COUNTER)
-                assert_that(counter_text, contains_string('AI'))
-                logging.info(f"Search results counter text contains 'AI': {counter_text}")
+            # Scroll to the search results section for better visibility
+            self.scroll_to_element(driver, HomePageLocators.SEARCH_RESULTS_ITEMS)
+            assert_that(search_results_items.is_displayed(), "Search results items are not displayed.")
 
-                # Verify that the first search result item is displayed
-                first_result = WebDriverWait(driver, 10).until(
-                    EC.presence_of_element_located(HomePageLocators.FIRST_SEARCH_RESULT)
-                )
-                assert_that(first_result.is_displayed(), "First search result item is not displayed.")
+            # Extract the text from the search results counter and verify it contains 'AI'
+            counter_text = self.get_element_text(driver, HomePageLocators.SEARCH_RESULTS_COUNTER)
+            assert_that(counter_text, contains_string('AI'))
 
-        except Exception as e:
-            # Log and attach error details to Allure report in case of any exception
-            logging.error(f"Error during search function check: {e}")
-            allure.attach(f"Error: {str(e)}", name="Error Details", attachment_type=allure.attachment_type.TEXT)
-            raise
+            # Verify that the first search result item is displayed
+            first_result = self.wait_for_element(driver, HomePageLocators.FIRST_SEARCH_RESULT, 20)
+            assert_that(first_result.is_displayed(), "First search result item is not displayed.")
