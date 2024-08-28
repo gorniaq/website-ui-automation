@@ -63,7 +63,7 @@ class TestFormsFieldsValidation(BrowserUtils):
                     if name == "user_phone":
                         phone_value = field.get_attribute("value")
                         assert_that(re.match(r'^[0-9\s\+;]*$', phone_value), is_(not_none()))
-                        assert_that(len(phone_value), is_(less_than_or_equal_to(50)))
+                        assert_that(len(phone_value), is_(less_than_or_equal_to(13)))
                         logging.info("Field 'user_phone' is validated for allowed characters and length")
 
             with allure.step("All fields validated"):
