@@ -11,8 +11,8 @@ from locators.home_page_locators import HomePageLocators
 
 class BrowserUtils:
     @staticmethod
-    def open_url(driver, url, expected_url=None):
-        """Opens a URL in the browser and optionally verifies that the correct URL is loaded.
+    def open_url_and_handle_notification(driver, url, expected_url=None):
+        """"Opens a URL in the browser, handles any notifications, and optionally verifies that the correct URL is loaded.
         Args:
             driver (WebDriver): The WebDriver instance.
             url (str): The URL to open.
@@ -21,9 +21,26 @@ class BrowserUtils:
         logging.info(f"Opening URL: {url}")
         driver.get(url)
 
+        # Handle notification (e.g., cookie banner)
+        BrowserUtils.handle_notification(driver)
+
         # If an expected URL is provided, verify it matches the current URL
         if expected_url:
             WebDriverWait(driver, 20).until(EC.url_to_be(expected_url))
+
+    @staticmethod
+    def wait_for_element(driver, locator, timeout=20):
+        """Waits for an element to be present in the DOM and returns it.
+        Args:
+            driver (WebDriver): The WebDriver instance.
+            locator (tuple): The locator of the element, e.g., (By.ID, 'element_id').
+            timeout (int, optional): Maximum time to wait for the element. Defaults to 20 seconds.
+        Returns:
+            WebElement: The located element.
+        """
+        return WebDriverWait(driver, timeout).until(
+            EC.presence_of_element_located(locator)
+        )
 
     @staticmethod
     def scroll_to_element(driver, locator):
