@@ -1,5 +1,6 @@
 import pytest
 from drivers.driver_factory import DriverFactory
+import allure
 
 
 @pytest.fixture(scope="function")
@@ -23,3 +24,23 @@ def driver(request):
     yield driver
     driver.quit()
 
+
+@pytest.hookimpl(tryfirst=True, hookwrapper=True)
+def pytest_runtest_makereport(item, call):
+    """
+    Attach a screenshot and error details to the Allure report if a test fails.
+    """
+    outcome = yield
+    report = outcome.get_result()
+
+    # We only want to take a screenshot for the final call of the test, not setup or teardown
+    if report.when == 'call' and report.failed:
+        # Get the WebDriver instance from the test item
+        driver = item.funcargs.get('driver')
+        if driver is not None:
+            # Take a screenshot and attach it to the Allure report
+            allure.attach(driver.get_screenshot_as_png(), name="Screenshot", attachment_type=allure.attachment_type.PNG)
+
+        # Attach the error text to the Allure report
+        error_message = str(report.longrepr)
+        allure.attach(error_message, name="Error Message", attachment_type=allure.attachment_type.TEXT)
