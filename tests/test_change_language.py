@@ -22,13 +22,11 @@ class TestChangeLanguage(BrowserUtils, FileUtils):
 
         with allure.step("Clicking the language selector"):
             # Wait for the language selector button to be clickable, then click it.
-            language_selector = self.wait_for_element_to_be_clickable(driver, HomePageLocators.LANG_SELECTOR_BTN, 20)
-            language_selector.click()
+            language_selector = self.wait_for_element_and_click(driver, HomePageLocators.LANG_SELECTOR_BTN, 20)
 
         with allure.step("Selecting Ukrainian language option"):
             # Wait for the Ukrainian language option to be clickable, then select it.
-            ukrainian_language_option = self.wait_for_element_to_be_clickable(driver, HomePageLocators.UA_LANG, 20)
-            ukrainian_language_option.click()
+            ukrainian_language_option = self.wait_for_element_and_click(driver, HomePageLocators.UA_LANG, 20)
 
         with allure.step("Verify URL and language attribute"):
             # Verify that the URL has changed to the Ukrainian version of the site.

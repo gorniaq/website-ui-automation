@@ -9,7 +9,6 @@ from utils.browser_utils import BrowserUtils
 
 
 class TestPoliciesList(BrowserUtils):
-
     @allure.feature('Policies List')
     @allure.story('Verify policies list on the page')
     @pytest.mark.parametrize("driver", ["chrome", "firefox"], indirect=True)
@@ -28,12 +27,11 @@ class TestPoliciesList(BrowserUtils):
             self.scroll_to_element(driver, HomePageLocators.FOOTER)
 
             # Wait until the policies section becomes visible on the page.
-            policies_section = self.wait_for_element_to_be_clickable(driver, HomePageLocators.POLICIES_SECTION, 20)
+            policies_section = self.wait_for_element(driver, HomePageLocators.POLICIES_SECTION, 20)
 
         with allure.step("Extract and log policy links"):
             # Find all the policy links within the policies section.
             policy_links = policies_section.find_elements(*HomePageLocators.POLICY_LINKS)
-
             # Extract and clean the text from each policy link.
             policy_texts = [link.text.strip() for link in policy_links]
 
@@ -47,4 +45,5 @@ class TestPoliciesList(BrowserUtils):
         with allure.step("Verify that all expected policies are present"):
             # Check that each expected policy is present in the list of policies found on the page.
             for policy in EXPECTED_POLICIES:
-                assert_that(policy_texts, has_item(policy))
+                assert_that(policy_texts, has_item(policy),
+                            f"Expected policy '{policy}' is not found in the list of policies: {policy_texts}")

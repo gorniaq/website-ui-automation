@@ -41,9 +41,9 @@ class BrowserUtils:
         )
 
     @staticmethod
-    def wait_for_element_to_be_clickable(driver, locator, timeout=20):
+    def wait_for_element_and_click(driver, locator, timeout=20):
         """
-        Wait for an element to be clickable.
+        Wait for an element to be clickable and click.
         Args:
             driver (WebDriver): The WebDriver instance.
             locator (tuple): The locator of the element to wait for.
@@ -53,7 +53,7 @@ class BrowserUtils:
         """
         return WebDriverWait(driver, timeout).until(
             EC.element_to_be_clickable(locator)
-        )
+        ).click()
 
     @staticmethod
     def get_element_attribute(driver, locator, attribute):
@@ -101,6 +101,15 @@ class BrowserUtils:
         logging.info(f"URL verified: {expected_url}")
 
     @staticmethod
+    def wait_for_element_invisibility(driver, locator, timeout=20):
+        """
+        Waits until the element specified by the locator becomes invisible on the page.
+        """
+        return WebDriverWait(driver, timeout).until(
+            EC.invisibility_of_element_located(locator)
+        )
+
+    @staticmethod
     def scroll_to_element(driver, locator):
         """Scrolls the page until the specified element is in view.
         Args:
@@ -130,15 +139,9 @@ class BrowserUtils:
             driver: The WebDriver instance used to interact with the browser.
             timeout: Maximum time (in seconds) to wait for the notification to disappear.
         """
-        try:
-            # Wait until the notification is no longer visible on the page
-            WebDriverWait(driver, timeout).until(
-                EC.invisibility_of_element_located(HomePageLocators.COOKIE_BANNER)
-            )
-            logger.info("Notification has disappeared.")
-        except TimeoutException:
-            # Log a warning if the notification did not disappear within the given timeout
-            logger.warning("Notification did not disappear within the given timeout.")
+        # Wait until the notification is no longer visible on the page
+        BrowserUtils.wait_for_element_invisibility(driver, HomePageLocators.COOKIE_BANNER, 20)
+        logger.info("Notification has disappeared.")
 
     @staticmethod
     def _close_notification(driver):
@@ -147,18 +150,10 @@ class BrowserUtils:
         Args:
             driver: The WebDriver instance used to interact with the browser.
         """
-        try:
-            # Wait until the notification close button is clickable
-            close_button = WebDriverWait(driver, 20).until(
-                EC.element_to_be_clickable(HomePageLocators.COOKIE_ACCEPT_BUTTON)
-            )
-            BrowserUtils.scroll_to_element(driver, HomePageLocators.COOKIE_ACCEPT_BUTTON)
-            close_button.click()  # Click the close button to close the notification
-            logger.info("Notification was closed.")
-
-        except TimeoutException:
-            # Log info if the notification close button was not present or clickable
-            logger.info("Notification close button was not present or clickable.")
+        # Wait until the notification close button is clickable
+        BrowserUtils.scroll_to_element(driver, HomePageLocators.COOKIE_ACCEPT_BUTTON)
+        BrowserUtils.wait_for_element_and_click(driver, HomePageLocators.COOKIE_ACCEPT_BUTTON, 20)
+        logger.info("Notification was closed.")
 
     @staticmethod
     def handle_notification(driver):

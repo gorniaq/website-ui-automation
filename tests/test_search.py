@@ -27,8 +27,7 @@ class TestSearchFunction(BrowserUtils):
 
         # Click on the search icon to open the search panel
         with allure.step("Clicking the search icon"):
-            search_icon = self.wait_for_element_to_be_clickable(driver, HomePageLocators.SEARCH_ICON, 20)
-            search_icon.click()
+            self.wait_for_element_and_click(driver, HomePageLocators.SEARCH_ICON, 20)
 
         # Enter the search query 'AI'
         with allure.step("Entering search query"):
@@ -38,8 +37,7 @@ class TestSearchFunction(BrowserUtils):
 
         # Click the search button to submit the search
         with allure.step("Clicking the search button"):
-            search_button = self.wait_for_element(driver, HomePageLocators.SEARCH_BUTTON_FIND, 30)
-            search_button.click()
+            self.wait_for_element_and_click(driver, HomePageLocators.SEARCH_BUTTON_FIND, 30)
 
         # Verify that the URL contains the search query parameter
         with allure.step("Verifying URL contains search query"):
@@ -47,7 +45,8 @@ class TestSearchFunction(BrowserUtils):
                 EC.url_contains("q=AI")
             )
             current_url = driver.current_url
-            assert_that(current_url, contains_string("q=AI"))
+            assert_that(current_url, contains_string("q=AI"),
+                        f"Expected 'q=AI' in URL but got: {current_url}")
 
         # Check that search results are displayed correctly
         with allure.step("Checking search results"):
@@ -63,7 +62,8 @@ class TestSearchFunction(BrowserUtils):
 
             # Extract the text from the search results counter and verify it contains 'AI'
             counter_text = self.get_element_text(driver, HomePageLocators.SEARCH_RESULTS_COUNTER)
-            assert_that(counter_text, contains_string('AI'))
+            assert_that(counter_text, contains_string('AI'),
+                        f"Expected search counter to contain 'AI' but got: {counter_text}")
 
             # Verify that the first search result item is displayed
             first_result = self.wait_for_element(driver, HomePageLocators.FIRST_SEARCH_RESULT, 20)

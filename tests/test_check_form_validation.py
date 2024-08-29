@@ -11,7 +11,6 @@ from utils.browser_utils import BrowserUtils
 
 
 class TestFormsFieldsValidation(BrowserUtils):
-
     @allure.feature('Form Validation Check')
     @allure.story('Verify required fields in the contact form')
     @pytest.mark.parametrize("driver", ["chrome", "firefox"], indirect=True)
@@ -37,20 +36,21 @@ class TestFormsFieldsValidation(BrowserUtils):
 
                 # Check the field type
                 field_type = field.get_attribute("type")
-                assert_that(field_type, is_("text"))
+                assert_that(field_type, is_("text"),
+                            f"Field '{name}' is expected to be of type 'text', but got '{field_type}'.")
 
-                # Input validation
                 # Clear any existing text in the input field
                 field.clear()
                 # Enter the provided value into the input
                 field.send_keys(value)
 
                 if name == "user_email":
-                    assert_that("@" in field.get_attribute("value"), is_(True))
+                    assert_that("@" in field.get_attribute("value"), is_(True),
+                                f"Field '{name}' should contain '@' symbol for a valid email address.")
 
                 if name == "user_phone":
                     phone_value = field.get_attribute("value")
                     assert_that(re.match(r'^[0-9\s\+;]*$', phone_value), is_(not_none()),
                                 "Phone number contains invalid characters")
                     assert_that(len(phone_value), is_(less_than_or_equal_to(13)),
-                                "Phone number length exceeds 13 digits")
+                                f"Phone number '{phone_value}' exceeds the allowed length of 13 digits.")

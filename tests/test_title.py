@@ -30,4 +30,5 @@ class TestMetaTitle(BrowserUtils):
         # Compare the meta title content with the expected value
         with allure.step("Comparing meta title content with expected value"):
             expected_title = "EPAM | Software Engineering & Product Development Services"
-            assert_that(content, equal_to(expected_title))
+            assert_that(content, equal_to(expected_title),
+                        f"Meta title does not match: expected '{expected_title}', but got '{content}'")

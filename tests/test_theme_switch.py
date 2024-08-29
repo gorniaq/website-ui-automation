@@ -8,7 +8,6 @@ from utils.browser_utils import BrowserUtils
 
 
 class TestThemeSwitch(BrowserUtils):
-
     @allure.feature('Theme Switch')
     @allure.story('Check the ability to switch Light / Dark mode')
     @pytest.mark.parametrize("driver", ["chrome", "firefox"], indirect=True)
@@ -20,10 +19,10 @@ class TestThemeSwitch(BrowserUtils):
 
         # Wait for the theme toggle to be clickable and click it
         with allure.step("Wait for the theme toggle to be clickable and click"):
-            theme_toggle = self.wait_for_element(driver, HomePageLocators.THEME_TOGGLE, 20)
-            theme_toggle.click()
+            self.wait_for_element_and_click(driver, HomePageLocators.THEME_TOGGLE, 20)
 
         # Verify that the theme has successfully switched by checking the body's class attribute
         with allure.step("Verify the theme switch"):
             body_class = self.get_element_attribute(driver, HomePageLocators.BODY, "class")
-            assert_that(body_class, any_of(contains_string("dark-mode"), contains_string("light-mode")))
+            assert_that(body_class, any_of(contains_string("dark-mode"), contains_string("light-mode")),
+                        f"Theme switch failed: body class is '{body_class}'")

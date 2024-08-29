@@ -8,7 +8,6 @@ from utils.browser_utils import BrowserUtils
 
 
 class TestLogoRedirectsToHomepage(BrowserUtils):
-
     @allure.feature("Navigation Functionality")
     @allure.story("Verify that clicking the company logo redirects to the homepage")
     @pytest.mark.parametrize("driver", ["chrome", "firefox"], indirect=True)
@@ -22,10 +21,10 @@ class TestLogoRedirectsToHomepage(BrowserUtils):
 
         #  Wait for the company logo to be clickable.
         with allure.step("Waiting for the company logo to be clickable and click"):
-            logo = self.wait_for_element(driver, AboutPageLocators.COMPANY_LOGO_LINK, 20)
-            logo.click()
+            self.wait_for_element_and_click(driver, AboutPageLocators.COMPANY_LOGO_LINK, 20)
 
         # Verify that the current URL is the homepage URL.
         with allure.step("Verifying the redirect to the homepage"):
             current_url = driver.current_url
-            assert_that(current_url, equal_to(BASE_URL))
+            assert_that(current_url, equal_to(BASE_URL),
+                        f"Expected to be redirected to {BASE_URL}, but got {current_url}")
