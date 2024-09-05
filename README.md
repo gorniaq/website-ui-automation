@@ -14,7 +14,7 @@ This project contains test automation scripts using Selenium WebDriver and Pytho
 
 1. **Clone the repository:**
    ```bash
-   git clone git@github.com:gorniaq/website-ui-automation.git
+   git clone https://github.com/gorniaq/website-ui-automation.git
    cd test-automation-project
    
 2. **Install the required dependencies:**
