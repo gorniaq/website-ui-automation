@@ -1,11 +1,9 @@
-import pytest
 import allure
 from hamcrest import assert_that, equal_to
 from selenium.webdriver.common.by import By
 
 from locators.home_page_locators import HomePageLocators
 from utils.browser_utils import BrowserUtils
-from config.config import BASE_URL
 from constants import EXPECTED_REGIONS
 
 
@@ -13,18 +11,17 @@ class TestOurLocationsRegions(BrowserUtils):
 
     @allure.feature('Location Tabs Functionality')
     @allure.story('Verify switching between location lists by region')
-    @pytest.mark.parametrize("driver", ["chrome", "firefox"], indirect=True)
     def test_our_locations_regions(self, driver):
         """
         Test to verify switching between location lists by region.
         """
         # Open the target URL and handle any cookie banners or notifications.
         with allure.step("Open URL and close the cookie banner"):
-            self.open_url_and_handle_notification(driver, BASE_URL)
+            self.open_url_and_handle_notification(driver)
 
         with allure.step("Scroll to the Locations section"):
             # Wait for the Locations section to be present on the page
-            self.wait_for_element(driver, HomePageLocators.TAB_LOCATION, 20)
+            self.wait_for_element(driver, HomePageLocators.TAB_LOCATION)
             # Scroll to the Locations section for visibility
             self.scroll_to_element(driver, HomePageLocators.TAB_LOCATION_SECTION)
 
