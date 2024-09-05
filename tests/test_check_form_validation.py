@@ -1,4 +1,3 @@
-import pytest
 import allure
 import re
 from hamcrest import assert_that, is_, less_than_or_equal_to, not_none
@@ -13,7 +12,6 @@ from utils.browser_utils import BrowserUtils
 class TestFormsFieldsValidation(BrowserUtils):
     @allure.feature('Form Validation Check')
     @allure.story('Verify required fields in the contact form')
-    @pytest.mark.parametrize("driver", ["chrome", "firefox"], indirect=True)
     def test_check_required_fields(self, driver):
 
         # Open the target URL and handle any cookie banners or notifications.

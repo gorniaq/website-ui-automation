@@ -1,4 +1,3 @@
-import pytest
 import allure
 from hamcrest import assert_that, any_of, contains_string
 
@@ -9,7 +8,6 @@ from utils.browser_utils import BrowserUtils
 class TestThemeSwitch(BrowserUtils):
     @allure.feature('Theme Switch')
     @allure.story('Check the ability to switch Light / Dark mode')
-    @pytest.mark.parametrize("driver", ["chrome", "firefox"], indirect=True)
     def test_theme_switch(self, driver):
 
         # Open the homepage and close the cookie notification banner

@@ -14,7 +14,7 @@ This project contains test automation scripts using Selenium WebDriver and Pytho
 
 1. **Clone the repository:**
    ```bash
-   git clone git@github.com:gorniaq/website-ui-automation.git
+   git clone https://github.com/gorniaq/website-ui-automation.git
    cd test-automation-project
    
 2. **Install the required dependencies:**
@@ -34,7 +34,7 @@ This project contains test automation scripts using Selenium WebDriver and Pytho
       ```
 
 ## Allure Test Report
-![Allure Report](https://imgur.com/YybyaQS.png)
+![Allure Report](https://imgur.com/KdTA36h.png)
 
 ## Test Case Summary
 
@@ -44,4 +44,4 @@ This is a summary of the test cases that did not pass:
 
    Failed - The test expected 6 items, but 9 items are displayed on the site.
    
-![Case 4 Allure Report](https://imgur.com/CGOaN89.png)
+![Case 4 Allure Report](https://imgur.com/TUlN2sq.png)

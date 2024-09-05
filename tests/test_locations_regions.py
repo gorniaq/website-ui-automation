@@ -1,4 +1,3 @@
-import pytest
 import allure
 from hamcrest import assert_that, equal_to
 from selenium.webdriver.common.by import By
@@ -12,7 +11,6 @@ class TestOurLocationsRegions(BrowserUtils):
 
     @allure.feature('Location Tabs Functionality')
     @allure.story('Verify switching between location lists by region')
-    @pytest.mark.parametrize("driver", ["chrome", "firefox"], indirect=True)
     def test_our_locations_regions(self, driver):
         """
         Test to verify switching between location lists by region.

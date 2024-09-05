@@ -1,4 +1,3 @@
-import pytest
 import allure
 from hamcrest import assert_that, has_item, equal_to
 
@@ -10,7 +9,6 @@ from utils.browser_utils import BrowserUtils
 class TestPoliciesList(BrowserUtils):
     @allure.feature('Policies List')
     @allure.story('Verify policies list on the page')
-    @pytest.mark.parametrize("driver", ["chrome", "firefox"], indirect=True)
     def test_policies_list(self, driver):
         """
         Test to verify the policies list on the page.

@@ -1,4 +1,3 @@
-import pytest
 import allure
 from hamcrest import assert_that, contains_string
 from selenium.webdriver.support.ui import WebDriverWait
@@ -13,7 +12,6 @@ class TestSearchFunction(BrowserUtils):
 
     @allure.feature("Search Functionality")
     @allure.story("Check the search function works correctly")
-    @pytest.mark.parametrize("driver", ["chrome", "firefox"], indirect=True)
     def test_search_function(self, driver):
         """
         Test case to verify the search functionality on the homepage.

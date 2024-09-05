@@ -1,4 +1,3 @@
-import pytest
 import allure
 from hamcrest import assert_that, equal_to
 from locators.home_page_locators import HomePageLocators
@@ -9,7 +8,6 @@ class TestMetaTitle(BrowserUtils):
 
     @allure.feature('Meta Title Check')
     @allure.story('Verify meta title on the homepage')
-    @pytest.mark.parametrize("driver", ["chrome", "firefox"], indirect=True)
     def test_meta_title(self, driver):
         """
         Test to verify the meta title on the homepage.

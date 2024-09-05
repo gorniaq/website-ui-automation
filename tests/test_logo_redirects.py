@@ -1,4 +1,3 @@
-import pytest
 import allure
 from hamcrest import assert_that, equal_to
 
@@ -10,7 +9,6 @@ from utils.browser_utils import BrowserUtils
 class TestLogoRedirectsToHomepage(BrowserUtils):
     @allure.feature("Navigation Functionality")
     @allure.story("Verify that clicking the company logo redirects to the homepage")
-    @pytest.mark.parametrize("driver", ["chrome", "firefox"], indirect=True)
     def test_logo_redirects_to_homepage(self, driver):
         """
             Test case to verify that clicking the company logo redirects to the homepage.

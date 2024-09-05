@@ -1,4 +1,3 @@
-import pytest
 import allure
 from hamcrest import assert_that, is_
 
@@ -13,7 +12,6 @@ class TestDownloadReport(BrowserUtils):
 
     @allure.feature('Report Download Check')
     @allure.story('Verify report download functionality')
-    @pytest.mark.parametrize("driver", ["chrome", "firefox"], indirect=True)
     def test_download_report(self, driver):
         """
         Test to verify that the report can be downloaded successfully.

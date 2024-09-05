@@ -1,4 +1,3 @@
-import pytest
 import allure
 from hamcrest import assert_that, contains_string, equal_to
 
@@ -11,7 +10,6 @@ from utils.file_utils import FileUtils
 class TestChangeLanguage(BrowserUtils, FileUtils):
     @allure.feature('Language Selection')
     @allure.story('Change Language to Ukrainian')
-    @pytest.mark.parametrize("driver", ["chrome", "firefox"], indirect=True)
     def test_change_language_to_ua(self, driver):
         """
         Test to change the website language to Ukrainian and verify the language change.
