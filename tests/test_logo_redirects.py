@@ -14,8 +14,7 @@ class TestLogoRedirectsToHomepage(BrowserUtils):
             Test case to verify that clicking the company logo redirects to the homepage.
         """
         # Open the homepage and close the cookie notification banner
-        with allure.step("Open URL and close the cookie banner"):
-            self.open_url_and_handle_notification(driver, ABOUT_URL)
+        self.open_url_and_handle_notification(driver, ABOUT_URL)
 
         #  Wait for the company logo to be clickable.
         with allure.step("Waiting for the company logo to be clickable and click"):

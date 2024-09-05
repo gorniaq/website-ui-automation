@@ -16,8 +16,7 @@ class TestOurLocationsRegions(BrowserUtils):
         Test to verify switching between location lists by region.
         """
         # Open the target URL and handle any cookie banners or notifications.
-        with allure.step("Open URL and close the cookie banner"):
-            self.open_url_and_handle_notification(driver)
+        self.open_url_and_handle_notification(driver)
 
         with allure.step("Scroll to the Locations section"):
             # Wait for the Locations section to be present on the page

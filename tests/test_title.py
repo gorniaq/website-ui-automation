@@ -13,8 +13,7 @@ class TestMetaTitle(BrowserUtils):
         Test to verify the meta title on the homepage.
         """
         # Open the homepage and close the cookie notification banner
-        with allure.step("Open URL and close the cookie banner"):
-            self.open_url_and_handle_notification(driver)
+        self.open_url_and_handle_notification(driver)
 
         # Wait for the <meta> element with 'og:title' attribute to be present
         with allure.step("Waiting for <meta> element with 'og:title' attribute"):

@@ -19,8 +19,7 @@ class TestSearchFunction(BrowserUtils):
             Exception: If any error occurs during the test.
         """
         # Open the homepage and close the cookie notification banner
-        with allure.step("Open URL and close the cookie banner"):
-            self.open_url_and_handle_notification(driver)
+        self.open_url_and_handle_notification(driver)
 
         # Click on the search icon to open the search panel
         with allure.step("Clicking the search icon"):
@@ -34,7 +33,7 @@ class TestSearchFunction(BrowserUtils):
 
         # Click the search button to submit the search
         with allure.step("Clicking the search button"):
-            self.wait_for_element_and_click(driver, HomePageLocators.SEARCH_BUTTON_FIND, 30)
+            self.wait_for_element_and_click(driver, HomePageLocators.SEARCH_BUTTON_FIND)
 
         # Verify that the URL contains the search query parameter
         with allure.step("Verifying URL contains search query"):
@@ -47,11 +46,11 @@ class TestSearchFunction(BrowserUtils):
 
         # Check that search results are displayed correctly
         with allure.step("Checking search results"):
-            search_results_counter = self.wait_for_element(driver, HomePageLocators.SEARCH_RESULTS_COUNTER, 20)
+            search_results_counter = self.wait_for_element(driver, HomePageLocators.SEARCH_RESULTS_COUNTER)
             # Verify that the search results counter is displayed
             assert_that(search_results_counter.is_displayed(), "Search results counter is not displayed.")
 
-            search_results_items = self.wait_for_element(driver, HomePageLocators.SEARCH_RESULTS_ITEMS)
+            search_results_items = self.wait_for_element(driver, HomePageLocators.SEARCH_RESULTS_ITEMS, 30)
 
             # Scroll to the search results section for better visibility
             self.scroll_to_element(driver, HomePageLocators.SEARCH_RESULTS_ITEMS)
