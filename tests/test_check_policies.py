@@ -16,8 +16,7 @@ class TestPoliciesList(BrowserUtils):
             Exception: Error during policies list verification.
         """
         # Open the homepage and close the cookie notification banner
-        with allure.step("Open URL and close the cookie banner"):
-            self.open_url_and_handle_notification(driver)
+        self.open_url_and_handle_notification(driver)
 
         with allure.step("Scroll to the footer and locate the policies section"):
             # Scroll down the webpage to the footer where the policies section is located.

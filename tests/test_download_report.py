@@ -17,8 +17,7 @@ class TestDownloadReport(BrowserUtils):
         Test to verify that the report can be downloaded successfully.
         """
         # Open the homepage and close the cookie notification banner
-        with allure.step("Open URL and close the cookie banner"):
-            self.open_url_and_handle_notification(driver, ABOUT_URL)
+        self.open_url_and_handle_notification(driver, ABOUT_URL)
 
         # Scroll to the report download section on the page
         with allure.step("Scroll to the report download section"):

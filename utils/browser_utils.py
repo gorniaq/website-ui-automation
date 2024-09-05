@@ -1,5 +1,5 @@
 import logging
-from selenium.common import TimeoutException
+import allure
 from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -19,15 +19,16 @@ class BrowserUtils:
             expected_url (str, optional): The URL to verify after loading. Defaults to None.
             timeout (int, optional): Maximum time to wait for the element. Defaults to 20 seconds.
         """
-        logging.info(f"Opening URL: {url}")
-        driver.get(url)
+        with allure.step("Open URL and close the cookie banner"):
+            logging.info(f"Opening URL: {url}")
+            driver.get(url)
 
-        # Handle notification (e.g., cookie banner)
-        BrowserUtils.handle_notification(driver)
+            # Handle notification (e.g., cookie banner)
+            BrowserUtils.handle_notification(driver)
 
-        # If an expected URL is provided, verify it matches the current URL
-        if expected_url:
-            BrowserUtils.verify_url(driver, expected_url)
+            # If an expected URL is provided, verify it matches the current URL
+            if expected_url:
+                BrowserUtils.verify_url(driver, expected_url)
 
     @staticmethod
     def wait_for_element(driver, locator, timeout=20):

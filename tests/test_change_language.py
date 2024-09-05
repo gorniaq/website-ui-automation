@@ -15,8 +15,7 @@ class TestChangeLanguage(BrowserUtils, FileUtils):
         Test to change the website language to Ukrainian and verify the language change.
         """
         # Open the homepage and close the cookie notification banner
-        with allure.step("Open URL and close the cookie banner"):
-            self.open_url_and_handle_notification(driver)
+        self.open_url_and_handle_notification(driver)
 
         with allure.step("Clicking the language selector"):
             # Wait for the language selector button to be clickable, then click it.

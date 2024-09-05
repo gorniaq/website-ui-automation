@@ -19,8 +19,7 @@ class TestSearchFunction(BrowserUtils):
             Exception: If any error occurs during the test.
         """
         # Open the homepage and close the cookie notification banner
-        with allure.step("Open URL and close the cookie banner"):
-            self.open_url_and_handle_notification(driver)
+        self.open_url_and_handle_notification(driver)
 
         # Click on the search icon to open the search panel
         with allure.step("Clicking the search icon"):

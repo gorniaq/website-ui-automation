@@ -15,8 +15,7 @@ class TestFormsFieldsValidation(BrowserUtils):
     def test_check_required_fields(self, driver):
 
         # Open the target URL and handle any cookie banners or notifications.
-        with allure.step("Open URL and close the cookie banner"):
-            self.open_url_and_handle_notification(driver, CONTACT_URL)
+        self.open_url_and_handle_notification(driver, CONTACT_URL)
 
         with allure.step("Waiting for the form to be present and scrolling to it"):
             # Wait for the form to be present and scroll to it

@@ -11,8 +11,7 @@ class TestThemeSwitch(BrowserUtils):
     def test_theme_switch(self, driver):
 
         # Open the homepage and close the cookie notification banner
-        with allure.step("Open URL and close the cookie banner"):
-            self.open_url_and_handle_notification(driver)
+        self.open_url_and_handle_notification(driver)
 
         # Wait for the theme toggle to be clickable and click it
         with allure.step("Wait for the theme toggle to be clickable and click"):
