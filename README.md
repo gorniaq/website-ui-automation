@@ -34,7 +34,7 @@ This project contains test automation scripts using Selenium WebDriver and Pytho
       ```
 
 ## Allure Test Report
-![Allure Report](https://imgur.com/o2HXad6.png)
+![Allure Report](https://imgur.com/YybyaQS.png)
 
 ## Test Case Summary
 
@@ -44,4 +44,4 @@ This is a summary of the test cases that did not pass:
 
    Failed - The test expected 6 items, but 9 items are displayed on the site.
    
-![Case 4 Allure Report](https://imgur.com/wXyJFkR.png)
+![Case 4 Allure Report](https://imgur.com/CGOaN89.png)
