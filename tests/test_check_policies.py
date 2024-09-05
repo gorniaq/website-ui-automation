@@ -2,7 +2,6 @@ import pytest
 import allure
 from hamcrest import assert_that, has_item, equal_to
 
-from config.config import BASE_URL
 from constants import EXPECTED_POLICIES
 from locators.home_page_locators import HomePageLocators
 from utils.browser_utils import BrowserUtils
@@ -20,14 +19,14 @@ class TestPoliciesList(BrowserUtils):
         """
         # Open the homepage and close the cookie notification banner
         with allure.step("Open URL and close the cookie banner"):
-            self.open_url_and_handle_notification(driver, BASE_URL)
+            self.open_url_and_handle_notification(driver)
 
         with allure.step("Scroll to the footer and locate the policies section"):
             # Scroll down the webpage to the footer where the policies section is located.
             self.scroll_to_element(driver, HomePageLocators.FOOTER)
 
             # Wait until the policies section becomes visible on the page.
-            policies_section = self.wait_for_element(driver, HomePageLocators.POLICIES_SECTION, 20)
+            policies_section = self.wait_for_element(driver, HomePageLocators.POLICIES_SECTION)
 
         with allure.step("Extract and log policy links"):
             # Find all the policy links within the policies section.

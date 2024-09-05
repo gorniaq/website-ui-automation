@@ -2,7 +2,6 @@ import pytest
 import allure
 from hamcrest import assert_that, any_of, contains_string
 
-from config.config import BASE_URL
 from locators.home_page_locators import HomePageLocators
 from utils.browser_utils import BrowserUtils
 
@@ -15,11 +14,11 @@ class TestThemeSwitch(BrowserUtils):
 
         # Open the homepage and close the cookie notification banner
         with allure.step("Open URL and close the cookie banner"):
-            self.open_url_and_handle_notification(driver, BASE_URL)
+            self.open_url_and_handle_notification(driver)
 
         # Wait for the theme toggle to be clickable and click it
         with allure.step("Wait for the theme toggle to be clickable and click"):
-            self.wait_for_element_and_click(driver, HomePageLocators.THEME_TOGGLE, 20)
+            self.wait_for_element_and_click(driver, HomePageLocators.THEME_TOGGLE)
 
         # Verify that the theme has successfully switched by checking the body's class attribute
         with allure.step("Verify the theme switch"):

@@ -21,7 +21,7 @@ class TestLogoRedirectsToHomepage(BrowserUtils):
 
         #  Wait for the company logo to be clickable.
         with allure.step("Waiting for the company logo to be clickable and click"):
-            self.wait_for_element_and_click(driver, AboutPageLocators.COMPANY_LOGO_LINK, 20)
+            self.wait_for_element_and_click(driver, AboutPageLocators.COMPANY_LOGO_LINK)
 
         # Verify that the current URL is the homepage URL.
         with allure.step("Verifying the redirect to the homepage"):

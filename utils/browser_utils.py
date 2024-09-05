@@ -3,18 +3,21 @@ from selenium.common import TimeoutException
 from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+
+from config.config import BASE_URL
 from config.logger_config import logger
 from locators.home_page_locators import HomePageLocators
 
 
 class BrowserUtils:
     @staticmethod
-    def open_url_and_handle_notification(driver, url, expected_url=None):
+    def open_url_and_handle_notification(driver, url=BASE_URL, expected_url=None, timeout=20):
         """Opens a URL in the browser, handles any notifications, and optionally verifies that the correct URL is loaded.
         Args:
             driver (WebDriver): The WebDriver instance.
             url (str): The URL to open.
             expected_url (str, optional): The URL to verify after loading. Defaults to None.
+            timeout (int, optional): Maximum time to wait for the element. Defaults to 20 seconds.
         """
         logging.info(f"Opening URL: {url}")
         driver.get(url)
@@ -24,7 +27,7 @@ class BrowserUtils:
 
         # If an expected URL is provided, verify it matches the current URL
         if expected_url:
-            WebDriverWait(driver, 20).until(EC.url_to_be(expected_url))
+            BrowserUtils.verify_url(driver, expected_url)
 
     @staticmethod
     def wait_for_element(driver, locator, timeout=20):
@@ -38,6 +41,20 @@ class BrowserUtils:
         """
         return WebDriverWait(driver, timeout).until(
             EC.presence_of_element_located(locator)
+        )
+
+    @staticmethod
+    def wait_for_element_visibility(driver, locator, timeout=20):
+        """Waits for an element to be present in the DOM and returns it.
+        Args:
+            driver (WebDriver): The WebDriver instance.
+            locator (tuple): The locator of the element, e.g., (By.ID, 'element_id').
+            timeout (int, optional): Maximum time to wait for the element. Defaults to 20 seconds.
+        Returns:
+            WebElement: The located element.
+        """
+        return WebDriverWait(driver, timeout).until(
+            EC.visibility_of_element_located(locator)
         )
 
     @staticmethod
@@ -56,33 +73,35 @@ class BrowserUtils:
         ).click()
 
     @staticmethod
-    def get_element_attribute(driver, locator, attribute):
+    def get_element_attribute(driver, locator, attribute, timeout=20):
         """
         Retrieves the value of a specified attribute from an element located by the provided locator.
         Args:
             driver (webdriver): The WebDriver instance used to interact with the browser.
             locator (tuple): A tuple containing the locator strategy and value to locate the element.
             attribute (str): The name of the attribute whose value is to be retrieved.
+            timeout (int, optional): Maximum time to wait for the URL to match. Defaults to 20 seconds.
         Returns:
             str: The value of the specified attribute from the located element.
         """
         # Use wait_for_element to wait until the element is present in the DOM
-        element = BrowserUtils.wait_for_element(driver, locator, timeout=20)
+        element = BrowserUtils.wait_for_element(driver, locator, timeout)
         # Retrieve and return the value of the specified attribute from the located element
         return element.get_attribute(attribute)
 
     @staticmethod
-    def get_element_text(driver, locator):
+    def get_element_text(driver, locator, timeout=20):
         """
         Retrieves the text content from an element located by the provided locator.
         Args:
             driver (webdriver): The WebDriver instance used to interact with the browser.
             locator (tuple): A tuple containing the locator strategy and value to locate the element.
+            timeout (int, optional): Maximum time to wait for the URL to match. Defaults to 20 seconds.
         Returns:
             str: The text content of the located element.
         """
         # Use wait_for_element to wait until the element is present in the DOM
-        element = BrowserUtils.wait_for_element(driver, locator, timeout=20)
+        element = BrowserUtils.wait_for_element(driver, locator, timeout)
         # Retrieve and return the text content from the located element
         return element.text
 
@@ -110,15 +129,14 @@ class BrowserUtils:
         )
 
     @staticmethod
-    def scroll_to_element(driver, locator):
+    def scroll_to_element(driver, locator, timeout=20):
         """Scrolls the page until the specified element is in view.
         Args:
             driver (WebDriver): The WebDriver instance.
             locator (tuple): The locator of the element to scroll to, e.g., (By.ID, 'element_id').
+            timeout (int, optional): Maximum time to wait for the URL to match. Defaults to 20 seconds.
         """
-        element = WebDriverWait(driver, 20).until(
-            EC.visibility_of_element_located(locator)
-        )
+        element = BrowserUtils.wait_for_element_visibility(driver, locator, timeout)
         driver.execute_script("arguments[0].scrollIntoView(true);", element)
         logger.info(f"Scrolled to element with locator: {locator}")
 
@@ -140,19 +158,20 @@ class BrowserUtils:
             timeout: Maximum time (in seconds) to wait for the notification to disappear.
         """
         # Wait until the notification is no longer visible on the page
-        BrowserUtils.wait_for_element_invisibility(driver, HomePageLocators.COOKIE_BANNER, 20)
+        BrowserUtils.wait_for_element_invisibility(driver, HomePageLocators.COOKIE_BANNER, timeout)
         logger.info("Notification has disappeared.")
 
     @staticmethod
-    def _close_notification(driver):
+    def _close_notification(driver, timeout=20):
         """
         Close the notification if it is present.
         Args:
             driver: The WebDriver instance used to interact with the browser.
+            timeout (int, optional): Maximum time to wait for the URL to match. Defaults to 20 seconds.
         """
         # Wait until the notification close button is clickable
         BrowserUtils.scroll_to_element(driver, HomePageLocators.COOKIE_ACCEPT_BUTTON)
-        BrowserUtils.wait_for_element_and_click(driver, HomePageLocators.COOKIE_ACCEPT_BUTTON, 20)
+        BrowserUtils.wait_for_element_and_click(driver, HomePageLocators.COOKIE_ACCEPT_BUTTON, timeout)
         logger.info("Notification was closed.")
 
     @staticmethod

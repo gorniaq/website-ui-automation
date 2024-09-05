@@ -1,7 +1,6 @@
 import pytest
 import allure
 from hamcrest import assert_that, equal_to
-from config.config import BASE_URL
 from locators.home_page_locators import HomePageLocators
 from utils.browser_utils import BrowserUtils
 
@@ -17,11 +16,11 @@ class TestMetaTitle(BrowserUtils):
         """
         # Open the homepage and close the cookie notification banner
         with allure.step("Open URL and close the cookie banner"):
-            self.open_url_and_handle_notification(driver, BASE_URL)
+            self.open_url_and_handle_notification(driver)
 
         # Wait for the <meta> element with 'og:title' attribute to be present
         with allure.step("Waiting for <meta> element with 'og:title' attribute"):
-            meta_title = self.wait_for_element(driver, HomePageLocators.META_TITLE, 20)
+            meta_title = self.wait_for_element(driver, HomePageLocators.META_TITLE)
 
         # Get the 'content' attribute from the <meta> element
         with allure.step("Getting the 'content' attribute from <meta> element"):

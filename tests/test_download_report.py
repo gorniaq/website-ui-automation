@@ -28,7 +28,7 @@ class TestDownloadReport(BrowserUtils):
 
         # Wait for the download button to be clickable, then click it
         with (allure.step("Wait for the download button to be clickable")):
-            download_button = self.wait_for_element_and_click(driver, AboutPageLocators.DOWNLOAD_BUTTON, 30)
+            self.wait_for_element_and_click(driver, AboutPageLocators.DOWNLOAD_BUTTON, 30)
 
         # Verify that the report has been downloaded
         with allure.step("Verify that the report is downloaded"):

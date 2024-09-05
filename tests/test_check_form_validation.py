@@ -22,7 +22,7 @@ class TestFormsFieldsValidation(BrowserUtils):
 
         with allure.step("Waiting for the form to be present and scrolling to it"):
             # Wait for the form to be present and scroll to it
-            self.wait_for_element(driver, ContactsPageLocators.FORM, 20)
+            self.wait_for_element(driver, ContactsPageLocators.FORM)
             self.scroll_to_element(driver, ContactsPageLocators.CONTACT_SECTION)
 
         # Validate each form field
